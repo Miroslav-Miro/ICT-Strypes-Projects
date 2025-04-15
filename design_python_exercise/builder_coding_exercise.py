@@ -1,32 +1,34 @@
+from typing import List, Tuple
+
 class CodeBuilder:
-    def __init__(self, root_name):
+    def __init__(self, root_name: str) -> None:
         """
-        Initializes the CodeBuilder with a class name and an empty list of fields.
+        Initializes a CodeBuilder for a given class name.
         Args:
-            root_name (str): The name of the class to be generated.
+            root_name (str): The name of the class to generate.
         """
-        self.root_name = root_name
-        self.fields = []
+        self.root_name: str = root_name
+        self.fields: List[Tuple[str, str]] = []
         
-    def add_field(self, name, type):
+    def add_field(self, name: str, value: str) -> 'CodeBuilder':
         """
-        Adds a field to the class with the given name and type/value.
+        Adds a field to the class.
         Args:
-            name (str): The name of the field.
-            type (str): The type or default value of the field (e.g., '0', '""', '[]').
+            name (str): Field name.
+            value (str): Field value or default.
         Returns:
-            self: Allows method chaining.
+            CodeBuilder: The current instance for chaining.
         """
-        self.fields.append((name, type))
+        self.fields.append((name, value))
         return self
     
-    def __str__(self):
+    def __str__(self) -> str:
         """
-        Builds and returns the Python class definition as a string.
+        Generates the class definition as a string.
         Returns:
-            str: The formatted class definition.
+            str: The class code.
         """
-        lines = [f"class {self.root_name}:"]
+        lines: List[str] = [f"class {self.root_name}:"]
         
         if not self.fields:
             lines.append("  def __init__(self):")

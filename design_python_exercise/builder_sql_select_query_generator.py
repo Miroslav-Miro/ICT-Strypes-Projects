@@ -1,63 +1,68 @@
-class QueryBuilder():
-    def __init__(self):
+from typing import List
+
+class QueryBuilder:
+    def __init__(self) -> None:
         """
-        Initializes a new instance of QueryBuilder with default empty values for columns,
+        Initializes a new instance of QueryBuilder with empty columns,
         table name, and condition.
         """
-        self.columns = []
-        self.table_name = ''
-        self.condition = ''
+        self.columns: List[str] = []
+        self.table_name: str = ''
+        self.condition: str = ''
   
-    def select(self, *fields):
+    def select(self, *fields: str) -> 'QueryBuilder':
         """
         Specifies the columns to be selected in the SQL query.
         Args:
-            fields: A variable number of column names to select.
+            fields (str): Variable number of column names.
         Returns:
-            self: Allows method chaining.
+            QueryBuilder: The current instance for chaining.
         """
-        for field in fields:
-            self.columns.append(field)
+        self.columns.extend(fields)
         return self
   
-    def from_table(self, table_name):
+    def from_table(self, table_name: str) -> 'QueryBuilder':
         """
-        Specifies the table name to select data from.
+        Sets the table name for the SQL query.
         Args:
             table_name (str): The name of the table.
         Returns:
-            self: Allows method chaining.
+            QueryBuilder: The current instance for chaining.
         """
         self.table_name = table_name
         return self
   
-    def where(self, condition):
+    def where(self, condition: str) -> 'QueryBuilder':
         """
-        Specifies the condition for the WHERE clause in the SQL query.
+        Sets the WHERE condition for the SQL query.
         Args:
-            condition (str): A condition string (e.g., "age > 18").
+            condition (str): A SQL condition string.
         Returns:
-            self: Allows method chaining.
+            QueryBuilder: The current instance for chaining.
         """
         self.condition = condition
         return self
   
-    def __str__(self):
+    def __str__(self) -> str:
         """
-        Constructs and returns the SQL query as a string.
+        Returns the constructed SQL query as a string.
         Returns:
             str: The formatted SQL query.
         """
-        lines = ['SELECT']
+        lines: List[str] = ['SELECT']
         
-        lines.append(', '.join(self.columns))
+        for i, column in enumerate(self.columns):
+            suffix = ',' if i < len(self.columns) - 1 else ''
+            lines.append(f'{column}{suffix}')
         
         lines.append('FROM')
-        lines.append(f'{self.table_name}')
-        lines.append('WHERE')
-        lines.append(f'{self.condition};')
+        lines.append(self.table_name)
+        
+        if self.condition:
+            lines.append(f'WHERE {self.condition}')
         
         return ' '.join(lines)
+
 
 # Example usage
 query = QueryBuilder().select("name", "age").from_table("users").where("age > 18")
