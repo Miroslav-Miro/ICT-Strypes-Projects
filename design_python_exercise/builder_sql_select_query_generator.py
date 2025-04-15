@@ -50,15 +50,12 @@ class QueryBuilder():
         """
         lines = ['SELECT']
         
-        for column in self.columns:
-            if column == self.columns[-1]:
-                lines.append(column)
-            else:
-                lines.append(column + ',')
+        lines.append(', '.join(self.columns))
         
         lines.append('FROM')
         lines.append(f'{self.table_name}')
-        lines.append(f'{self.condition}:')
+        lines.append('WHERE')
+        lines.append(f'{self.condition};')
         
         return ' '.join(lines)
 
