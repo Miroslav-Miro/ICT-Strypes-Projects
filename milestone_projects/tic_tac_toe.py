@@ -18,6 +18,7 @@ def print_board(e_b: Board) -> None:
     """
     Prints the current state of the Tic-Tac-Toe board.
     :param e_b: A dictionary representing the game board.
+    :type e_b: Board
     """
     for row in range(1, 4):
         print(f"{e_b[f'{row},1'] or ' '} | {e_b[f'{row},2'] or ' '} | {e_b[f'{row},3'] or ' '}")
