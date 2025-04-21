@@ -2,7 +2,6 @@ import random
 from typing import List
 
 # Global variable to store total value of player's cards
-total_player_cards_value: int = 0
 
 class Player:
     """
@@ -40,14 +39,15 @@ class Player:
         self.bank += amount
 
 
-def gameplay(choice: str) -> None:
+def gameplay(player_cards, bet_amount, choice: str) -> None:
     """
     Handles the gameplay loop based on the player's decision to BET or STAY.
 
     Args:
         choice (str): The initial player choice, either 'BET' or 'STAY'.
     """
-    global total_player_cards_value
+    total_player_cards_value: int = 0
+    
 
     if choice == 'BET':
         while choice == 'BET':
@@ -95,26 +95,29 @@ values: dict[str, int] = {
 player: Player = Player(1000)
 
 # Main game loop
-while player.bank > 0:
-    print(f"\n--- Your bank: {player.bank} ---")
-    print("You are on the table:")
+def main_game():
+    while player.bank > 0:
+        print(f"\n--- Your bank: {player.bank} ---")
+        print("You are on the table:")
     
-    bet_amount: int = int(input("Place your bet: "))
+        bet_amount: int = int(input("Place your bet: "))
     
-    print(f'You betting: {bet_amount}')
-    player.bet_money(bet_amount)
+        print(f'You betting: {bet_amount}')
+        player.bet_money(bet_amount)
     
-    total_player_cards_value = 0
-    player_cards: List[str] = []
+        total_player_cards_value = 0
+        player_cards: List[str] = []
     
-    for _ in range(2):
-        player_cards.append(random.choice(ranks))
+        for _ in range(2):
+            player_cards.append(random.choice(ranks))
     
-    total_player_cards_value = sum(values[card] for card in player_cards)
+        total_player_cards_value = sum(values[card] for card in player_cards)
     
-    print(', '.join(player_cards))
-    print(f'Your cards value: {total_player_cards_value}')
+        print(', '.join(player_cards))
+        print(f'Your cards value: {total_player_cards_value}')
     
-    choice: str = input('--BET-- / --STAY--')
+        choice: str = input('--BET-- / --STAY--')
     
-    gameplay(choice)
+        gameplay(player_cards, bet_amount, choice)
+
+main_game()

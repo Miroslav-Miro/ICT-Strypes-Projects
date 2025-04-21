@@ -1,67 +1,82 @@
-from typing import Dict, Optional
+from typing import Dict, Optional, List, Union
 
-# Global variables
-GAME_RUNNING: bool = True
-counter: int = 0
+# Global variables representing players
+PLAYER_X: str = 'X'
+PLAYER_O: str = 'O'
 
-# Board type
+# Type alias for the game board
 Board = Dict[str, Optional[str]]
 
-# Initialize empty board
+# Initialize empty board with positions as keys
 board: Board = {
     '1,1': None, '1,2': None, '1,3': None,
     '2,1': None, '2,2': None, '2,3': None,
     '3,1': None, '3,2': None, '3,3': None
 }
 
-def print_board(e_b: Board) -> None:
+def print_board(board: Board) -> None:
     """
     Prints the current state of the Tic-Tac-Toe board.
-    :param e_b: A dictionary representing the game board.
-    :type e_b: Board
+
+    :param board: A dictionary representing the game board.
     """
     for row in range(1, 4):
-        print(f"{e_b[f'{row},1'] or ' '} | {e_b[f'{row},2'] or ' '} | {e_b[f'{row},3'] or ' '}")
+        # Print each row, showing a space if the cell is empty
+        print(f"{board[f'{row},1'] or ' '} | {board[f'{row},2'] or ' '} | {board[f'{row},3'] or ' '}")
         if row < 3:
             print("---------")
 
 
-def is_there_a_winner(board: Board) -> bool:
+def is_there_a_winner(board: Board, counter: int) -> List[Union[bool, str]]:
     """
-    Checks if there's a winner and prints the winner symbol.
+    Checks if there's a winner and returns the game state.
+
     :param board: A dictionary representing the game board.
-    :return: False if there is a winner, otherwise True to continue the game.
+    :param counter: The number of turns played so far.
+    :return: A list containing a boolean (True to continue, False if there's a winner),
+             and optionally the winner message.
     """
+    winner_print = '' 
+    is_it_still_playing = True
+
+    # Check if there's a winner
     if winner(board):
         if counter % 2 == 0:
-            print('----X wins----')
+            winner_print = f'----{PLAYER_X} wins----'
         else:
-            print('----O wins----')
-        return False
-    return True
+            winner_print = f'----{PLAYER_O} wins----'
+        is_it_still_playing = False
+
+    # Return game status and winner message if game ended
+    if is_it_still_playing:
+        return [is_it_still_playing]
+
+    return [is_it_still_playing, winner_print]
 
 
-def winner(e_b: Board) -> bool:
+def winner(board: Board) -> bool:
     """
     Determines whether there is a winner on the current board.
-    :param e_b: A dictionary representing the game board.
+
+    :param board: A dictionary representing the game board.
     :return: True if a player has won, False otherwise.
     """
-    if e_b['1,1'] is e_b['1,2'] is e_b['1,3'] is not None:
+    # Check all winning conditions
+    if board['1,1'] is board['1,2'] is board['1,3'] is not None:
         is_winner = True
-    elif e_b['1,1'] is e_b['2,2'] is e_b['3,3'] is not None:
+    elif board['1,1'] is board['2,2'] is board['3,3'] is not None:
         is_winner = True
-    elif e_b['2,1'] is e_b['2,2'] is e_b['2,3'] is not None:
+    elif board['2,1'] is board['2,2'] is board['2,3'] is not None:
         is_winner = True
-    elif e_b['3,1'] is e_b['3,2'] is e_b['3,3'] is not None:
+    elif board['3,1'] is board['3,2'] is board['3,3'] is not None:
         is_winner = True
-    elif e_b['1,1'] is e_b['2,1'] is e_b['3,1'] is not None:
+    elif board['1,1'] is board['2,1'] is board['3,1'] is not None:
         is_winner = True
-    elif e_b['1,2'] is e_b['2,2'] is e_b['3,2'] is not None:
+    elif board['1,2'] is board['2,2'] is board['3,2'] is not None:
         is_winner = True
-    elif e_b['1,3'] is e_b['2,3'] is e_b['3,3'] is not None:
+    elif board['1,3'] is board['2,3'] is board['3,3'] is not None:
         is_winner = True
-    elif e_b['3,1'] is e_b['2,2'] is e_b['1,3'] is not None:
+    elif board['3,1'] is board['2,2'] is board['1,3'] is not None:
         is_winner = True
     else:
         is_winner = False
@@ -69,39 +84,56 @@ def winner(e_b: Board) -> bool:
     return is_winner
 
 
-def whose_turn_it_is() -> str:
+def whose_turn_it_is(counter: int) -> str:
     """
     Prompts the current player (X or O) to enter their move.
-    :return: The user's input representing their move.
+
+    :param counter: The current move count.
+    :return: The user's input representing their chosen move.
     """
     if counter == 0 or counter % 2 == 0:
-        return input("O enters a move: ")
+        return input(f"{PLAYER_O} enters a move: ")
     else:
-        return input("X enters a move: ")
+        return input(f"{PLAYER_X} enters a move: ")
 
 
-# Game loop
-while GAME_RUNNING and counter < 9:
+def main_game() -> None:
+    """
+    The main game loop for Tic-Tac-Toe.
+    Handles turn progression, input, board updates, and win/draw checks.
+    """
+    GAME_RUNNING: bool = True
+    counter: int = 0
 
-    move: str = whose_turn_it_is()
+    while GAME_RUNNING and counter < 9:
+        move: str = whose_turn_it_is(counter)
 
-    if move in board.keys():
-        if board[move] is None:
-            if counter % 2 == 0 or counter == 0:
-                board[move] = 'O'
-                counter += 1
-            elif counter % 3 == 0 or counter == 1:
-                board[move] = 'X'
-                counter += 1
-            elif counter == 9:
-                print('DRAW')
-                GAME_RUNNING = False
+        # Validate move input
+        if move in board.keys():
+            if board[move] is None:
+                # Assign move based on the turn
+                if counter % 2 == 0 or counter == 0:
+                    board[move] = f'{PLAYER_O}'
+                    counter += 1
+                elif counter % 2 != 0 or counter == 1:
+                    board[move] = f'{PLAYER_X}'
+                    counter += 1
+                elif counter == 8:
+                    print('DRAW')
+                    GAME_RUNNING = False
+            else:
+                print('Occupied')
         else:
-            print('Occupied')
-    else:
-        print('Invalid move')
-        continue
+            print('Invalid move')
+            continue
 
-    print_board(board)
+        print_board(board)
 
-    GAME_RUNNING = is_there_a_winner(board)
+        # Check if someone has won
+        if is_there_a_winner(board, counter)[0] == False:
+            GAME_RUNNING = False
+            print(is_there_a_winner(board, counter)[1])
+
+
+# Start the game
+main_game()
