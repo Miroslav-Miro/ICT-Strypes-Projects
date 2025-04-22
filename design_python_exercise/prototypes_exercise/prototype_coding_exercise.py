@@ -1,5 +1,6 @@
 from typing import Optional
 
+
 class Point:
     def __init__(self, x: int = 0, y: int = 0) -> None:
         """
@@ -11,8 +12,11 @@ class Point:
         self.x = x
         self.y = y
 
+
 class Line:
-    def __init__(self, start: Optional[Point] = None, end: Optional[Point] = None) -> None:
+    def __init__(
+        self, start: Optional[Point] = None, end: Optional[Point] = None
+    ) -> None:
         """
         A class representing a line segment in 2D space, defined by two Points.
         Args:
@@ -22,7 +26,7 @@ class Line:
         self.start = start if start else Point()
         self.end = end if end else Point()
 
-    def deep_copy(self) -> 'Line':
+    def deep_copy(self) -> "Line":
         """
         Creates a deep copy of the Line object.
         Returns:
@@ -34,7 +38,7 @@ class Line:
 
         # Create a new Line object with the copied points
         copied_line = Line(start_point, end_point)
-        
+
         return copied_line
 
 

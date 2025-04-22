@@ -1,18 +1,25 @@
 from typing import Dict, Optional, List, Union
 
 # Global variables representing players
-PLAYER_X: str = 'X'
-PLAYER_O: str = 'O'
+PLAYER_X: str = "X"
+PLAYER_O: str = "O"
 
 # Type alias for the game board
 Board = Dict[str, Optional[str]]
 
 # Initialize empty board with positions as keys
 board: Board = {
-    '1,1': None, '1,2': None, '1,3': None,
-    '2,1': None, '2,2': None, '2,3': None,
-    '3,1': None, '3,2': None, '3,3': None
+    "1,1": None,
+    "1,2": None,
+    "1,3": None,
+    "2,1": None,
+    "2,2": None,
+    "2,3": None,
+    "3,1": None,
+    "3,2": None,
+    "3,3": None,
 }
+
 
 def print_board(board: Board) -> None:
     """
@@ -22,7 +29,9 @@ def print_board(board: Board) -> None:
     """
     for row in range(1, 4):
         # Print each row, showing a space if the cell is empty
-        print(f"{board[f'{row},1'] or ' '} | {board[f'{row},2'] or ' '} | {board[f'{row},3'] or ' '}")
+        print(
+            f"{board[f'{row},1'] or ' '} | {board[f'{row},2'] or ' '} | {board[f'{row},3'] or ' '}"
+        )
         if row < 3:
             print("---------")
 
@@ -36,15 +45,15 @@ def is_there_a_winner(board: Board, counter: int) -> List[Union[bool, str]]:
     :return: A list containing a boolean (True to continue, False if there's a winner),
              and optionally the winner message.
     """
-    winner_print = '' 
+    winner_print = ""
     is_it_still_playing = True
 
     # Check if there's a winner
     if winner(board):
         if counter % 2 == 0:
-            winner_print = f'----{PLAYER_X} wins----'
+            winner_print = f"----{PLAYER_X} wins----"
         else:
-            winner_print = f'----{PLAYER_O} wins----'
+            winner_print = f"----{PLAYER_O} wins----"
         is_it_still_playing = False
 
     # Return game status and winner message if game ended
@@ -62,21 +71,21 @@ def winner(board: Board) -> bool:
     :return: True if a player has won, False otherwise.
     """
     # Check all winning conditions
-    if board['1,1'] is board['1,2'] is board['1,3'] is not None:
+    if board["1,1"] is board["1,2"] is board["1,3"] is not None:
         is_winner = True
-    elif board['1,1'] is board['2,2'] is board['3,3'] is not None:
+    elif board["1,1"] is board["2,2"] is board["3,3"] is not None:
         is_winner = True
-    elif board['2,1'] is board['2,2'] is board['2,3'] is not None:
+    elif board["2,1"] is board["2,2"] is board["2,3"] is not None:
         is_winner = True
-    elif board['3,1'] is board['3,2'] is board['3,3'] is not None:
+    elif board["3,1"] is board["3,2"] is board["3,3"] is not None:
         is_winner = True
-    elif board['1,1'] is board['2,1'] is board['3,1'] is not None:
+    elif board["1,1"] is board["2,1"] is board["3,1"] is not None:
         is_winner = True
-    elif board['1,2'] is board['2,2'] is board['3,2'] is not None:
+    elif board["1,2"] is board["2,2"] is board["3,2"] is not None:
         is_winner = True
-    elif board['1,3'] is board['2,3'] is board['3,3'] is not None:
+    elif board["1,3"] is board["2,3"] is board["3,3"] is not None:
         is_winner = True
-    elif board['3,1'] is board['2,2'] is board['1,3'] is not None:
+    elif board["3,1"] is board["2,2"] is board["1,3"] is not None:
         is_winner = True
     else:
         is_winner = False
@@ -113,24 +122,24 @@ def main_game() -> None:
             if board[move] is None:
                 # Assign move based on the turn
                 if counter % 2 == 0 or counter == 0:
-                    board[move] = f'{PLAYER_O}'
+                    board[move] = f"{PLAYER_O}"
                     counter += 1
                 elif counter % 2 != 0 or counter == 1:
-                    board[move] = f'{PLAYER_X}'
+                    board[move] = f"{PLAYER_X}"
                     counter += 1
                 elif counter == 8:
-                    print('DRAW')
+                    print("DRAW")
                     GAME_RUNNING = False
             else:
-                print('Occupied')
+                print("Occupied")
         else:
-            print('Invalid move')
+            print("Invalid move")
             continue
 
         print_board(board)
 
         # Check if someone has won
-        if is_there_a_winner(board, counter)[0] == False:
+        if is_there_a_winner(board, counter)[0] is False:
             GAME_RUNNING = False
             print(is_there_a_winner(board, counter)[1])
 

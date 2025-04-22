@@ -9,6 +9,7 @@ class Point:
         self.x = x
         self.y = y
 
+
 class Rectangle:
     def __init__(self, top_left: Point, bottom_right: Point) -> None:
         """
@@ -20,7 +21,7 @@ class Rectangle:
         self.top_left = top_left
         self.bottom_right = bottom_right
 
-    def deep_copy(self) -> 'Rectangle':
+    def deep_copy(self) -> "Rectangle":
         """
         Creates a deep copy of the rectangle.
         Returns:
@@ -29,7 +30,7 @@ class Rectangle:
         # Copy coordinates of the corner points
         top_copy = Point(self.top_left.x, self.top_left.y)
         bottom_copy = Point(self.bottom_right.x, self.bottom_right.y)
-        
+
         # Return a new Rectangle with the copied points
         return Rectangle(top_copy, bottom_copy)
 

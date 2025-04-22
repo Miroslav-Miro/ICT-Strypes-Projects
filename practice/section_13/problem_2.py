@@ -7,6 +7,7 @@ This script defines a generator function that yields a specified number of rando
 within a given inclusive range and prints them one by one.
 """
 
+
 def rand_num(low, high, n):
     """
     Generates a sequence of 'n' random integers between 'low' and 'high'.
@@ -20,6 +21,7 @@ def rand_num(low, high, n):
     """
     for i in range(n):
         yield random.randint(low, high)
+
 
 for num in rand_num(1, 10, 12):
     print(num)

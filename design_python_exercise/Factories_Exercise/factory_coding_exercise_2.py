@@ -2,6 +2,7 @@ class Person:
     """
     A class representing a person with a unique ID and name.
     """
+
     def __init__(self, id: int, name: str) -> None:
         """
         Initialize a new Person instance.
@@ -17,6 +18,7 @@ class PersonFactory:
     """
     A factory class to create Person instances with unique IDs.
     """
+
     def __init__(self) -> None:
         """
         Initialize the factory with a counter starting at 0.

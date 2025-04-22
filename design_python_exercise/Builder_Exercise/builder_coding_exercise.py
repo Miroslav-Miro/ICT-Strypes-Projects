@@ -1,5 +1,6 @@
 from typing import List, Tuple
 
+
 class CodeBuilder:
     def __init__(self, root_name: str) -> None:
         """
@@ -9,8 +10,8 @@ class CodeBuilder:
         """
         self.root_name: str = root_name
         self.fields: List[Tuple[str, str]] = []
-        
-    def add_field(self, name: str, value: str) -> 'CodeBuilder':
+
+    def add_field(self, name: str, value: str) -> "CodeBuilder":
         """
         Adds a field to the class.
         Args:
@@ -21,7 +22,7 @@ class CodeBuilder:
         """
         self.fields.append((name, value))
         return self
-    
+
     def __str__(self) -> str:
         """
         Generates the class definition as a string.
@@ -29,7 +30,7 @@ class CodeBuilder:
             str: The class code.
         """
         lines: List[str] = [f"class {self.root_name}:"]
-        
+
         if not self.fields:
             lines.append("  def __init__(self):")
             lines.append("    pass")
@@ -37,10 +38,10 @@ class CodeBuilder:
             lines.append("  def __init__(self):")
             for name, value in self.fields:
                 lines.append(f"    self.{name} = {value}")
-        
-        return '\n'.join(lines)
+
+        return "\n".join(lines)
 
 
 # Example usage
-cb = CodeBuilder('Person').add_field('name', '""').add_field('age', '0')
+cb = CodeBuilder("Person").add_field("name", '""').add_field("age", "0")
 print(cb)

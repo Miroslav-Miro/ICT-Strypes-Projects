@@ -1,7 +1,8 @@
 import copy
 from typing import List
 
-class Person: 
+
+class Person:
     def __init__(self, name: str, age: int) -> None:
         """
         A class representing a person.
@@ -10,10 +11,10 @@ class Person:
             age (int): The age of the person.
         """
         self.name: str = name  # Person's name
-        self.age: int = age    # Person's age
+        self.age: int = age  # Person's age
 
 
-class Group: 
+class Group:
     def __init__(self, persons: List[Person]) -> None:
         """
         A class representing a group of persons.
@@ -22,13 +23,15 @@ class Group:
         """
         self.persons: List[Person] = persons  # List of persons in the group
 
-    def deep_copy(self) -> 'Group':
+    def deep_copy(self) -> "Group":
         """
         Creates a deep copy of the group.
         Returns:
             Group: A new Group instance with deeply copied Person objects.
         """
-        copied_persons: List[Person] = copy.deepcopy(self.persons)  # Deep copy of the persons list
+        copied_persons: List[Person] = copy.deepcopy(
+            self.persons
+        )  # Deep copy of the persons list
         return Group(copied_persons)  # Return a new Group instance
 
 

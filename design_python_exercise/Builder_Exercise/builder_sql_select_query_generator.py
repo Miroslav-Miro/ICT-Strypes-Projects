@@ -1,5 +1,6 @@
 from typing import List
 
+
 class QueryBuilder:
     def __init__(self) -> None:
         """
@@ -7,10 +8,10 @@ class QueryBuilder:
         table name, and condition.
         """
         self.columns: List[str] = []
-        self.table_name: str = ''
-        self.condition: str = ''
-  
-    def select(self, *fields: str) -> 'QueryBuilder':
+        self.table_name: str = ""
+        self.condition: str = ""
+
+    def select(self, *fields: str) -> "QueryBuilder":
         """
         Specifies the columns to be selected in the SQL query.
         Args:
@@ -20,8 +21,8 @@ class QueryBuilder:
         """
         self.columns.extend(fields)
         return self
-  
-    def from_table(self, table_name: str) -> 'QueryBuilder':
+
+    def from_table(self, table_name: str) -> "QueryBuilder":
         """
         Sets the table name for the SQL query.
         Args:
@@ -31,8 +32,8 @@ class QueryBuilder:
         """
         self.table_name = table_name
         return self
-  
-    def where(self, condition: str) -> 'QueryBuilder':
+
+    def where(self, condition: str) -> "QueryBuilder":
         """
         Sets the WHERE condition for the SQL query.
         Args:
@@ -42,26 +43,26 @@ class QueryBuilder:
         """
         self.condition = condition
         return self
-  
+
     def __str__(self) -> str:
         """
         Returns the constructed SQL query as a string.
         Returns:
             str: The formatted SQL query.
         """
-        lines: List[str] = ['SELECT']
-        
+        lines: List[str] = ["SELECT"]
+
         for i, column in enumerate(self.columns):
-            suffix = ',' if i < len(self.columns) - 1 else ''
-            lines.append(f'{column}{suffix}')
-        
-        lines.append('FROM')
+            suffix = "," if i < len(self.columns) - 1 else ""
+            lines.append(f"{column}{suffix}")
+
+        lines.append("FROM")
         lines.append(self.table_name)
-        
+
         if self.condition:
-            lines.append(f'WHERE {self.condition}')
-        
-        return ' '.join(lines)
+            lines.append(f"WHERE {self.condition}")
+
+        return " ".join(lines)
 
 
 # Example usage

@@ -5,16 +5,16 @@ This script demonstrates iteration over a string using both a for-loop and manua
 with the iter() and next() functions.
 """
 
-s = 'hello'
+s = "hello"
 
 # Using for-loop iteration
 for char in s:
     print(char)
 
-print('\n')
+print("\n")
 
 # Using iter() and next()
-print('iter use -->')
+print("iter use -->")
 word_iter = iter(s)
 
 try:

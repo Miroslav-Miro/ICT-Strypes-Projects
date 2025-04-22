@@ -1,5 +1,6 @@
 from typing import List, Tuple
 
+
 class HtmlBuilder:
     def __init__(self, root_param: str) -> None:
         """
@@ -9,8 +10,8 @@ class HtmlBuilder:
         """
         self.root_param: str = root_param
         self.fields: List[Tuple[str, str]] = []
-    
-    def add_child(self, param: str, item: str) -> 'HtmlBuilder':
+
+    def add_child(self, param: str, item: str) -> "HtmlBuilder":
         """
         Adds a child HTML element inside the root tag.
         Args:
@@ -21,20 +22,20 @@ class HtmlBuilder:
         """
         self.fields.append((param, item))
         return self
-    
+
     def __str__(self) -> str:
         """
         Builds and returns the HTML structure as a string.
         Returns:
             str: The generated HTML code.
         """
-        lines: List[str] = [f'<{self.root_param}>']
-        
+        lines: List[str] = [f"<{self.root_param}>"]
+
         for param, item in self.fields:
-            lines.append(f'  <{param}>{item}</{param}>')
-        
-        lines.append(f'</{self.root_param}>')
-        return '\n'.join(lines)
+            lines.append(f"  <{param}>{item}</{param}>")
+
+        lines.append(f"</{self.root_param}>")
+        return "\n".join(lines)
 
 
 # Example usage

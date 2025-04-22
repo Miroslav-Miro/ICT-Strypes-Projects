@@ -7,10 +7,11 @@ def read_large_file(file_path):
     Yields:
         str: The next line from the file.
     """
-    with open(file_path, 'r') as file:
+    with open(file_path, "r") as file:
         for line in file:
             yield line
 
+
 # Example usage:
-for line in read_large_file('large.txt'):
+for line in read_large_file("large.txt"):
     print(line)
