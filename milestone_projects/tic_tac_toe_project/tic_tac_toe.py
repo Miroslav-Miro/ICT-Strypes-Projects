@@ -50,10 +50,11 @@ def is_there_a_winner(board: Board, counter: int) -> List[Union[bool, str]]:
 
     # Check if there's a winner
     if winner(board):
-        if counter % 2 == 0:
-            winner_print = f"----{PLAYER_X} wins----"
-        else:
-            winner_print = f"----{PLAYER_O} wins----"
+        # Determine the winner by checking the board
+        winner_player = (
+            PLAYER_X if any(board[key] == PLAYER_X for key in board) else PLAYER_O
+        )
+        winner_print = f"----{winner_player} wins----"
         is_it_still_playing = False
 
     # Return game status and winner message if game ended
@@ -145,4 +146,5 @@ def main_game() -> None:
 
 
 # Start the game
-main_game()
+if __name__ == "__main__":
+    main_game()
