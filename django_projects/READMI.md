@@ -35,15 +35,14 @@
 
 ## Features & Technologies
 
-| Feature              | Description                                  |
-| -------------------- | -------------------------------------------- |
-| Django Admin         | Auto-generated interface for database models |
-| Models & Migrations  | Database structure via Django ORM            |
-| Views & Templates    | Handling requests, rendering HTML            |
-| Form Handling        | Using Django's built-in `forms` module       |
-| User Authentication  | Registration, login/logout mechanisms        |
-| Static & Media       | Serving CSS, JS, and uploaded files          |
-| REST APIs (optional) | Exposing data via Django REST framework      |
+| Feature             | Description                                  |
+| ------------------- | -------------------------------------------- |
+| Django Admin        | Auto-generated interface for database models |
+| Models & Migrations | Database structure via Django ORM            |
+| Views & Templates   | Handling requests, rendering HTML            |
+| Form Handling       | Using Django's built-in `forms` module       |
+| User Authentication | Registration, login/logout mechanisms        |
+| Static & Media      | Serving CSS, and uploaded files              |
 
 ---
 
