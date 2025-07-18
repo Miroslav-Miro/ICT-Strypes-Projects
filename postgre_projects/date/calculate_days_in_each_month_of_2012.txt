@@ -1,0 +1,9 @@
+SELECT 
+  EXTRACT(MONTH FROM generate_series) AS month,
+  (date_trunc('month', generate_series + interval '1 month') 
+   - date_trunc('month', generate_series)) AS length
+FROM generate_series(
+  DATE '2012-01-01',
+  DATE '2012-12-01',
+  INTERVAL '1 month'
+);

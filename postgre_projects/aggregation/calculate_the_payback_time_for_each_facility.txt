@@ -1,0 +1,12 @@
+SELECT 
+  f.name,
+  f.initialoutlay / ((SUM(
+    CASE 
+      WHEN b.memid = 0 THEN b.slots * f.guestcost
+      ELSE b.slots * f.membercost
+    END
+  ) / 3.0) - f.monthlymaintenance) AS months
+FROM cd.facilities f
+LEFT JOIN cd.bookings b ON f.facid = b.facid
+GROUP BY f.name, f.initialoutlay, f.monthlymaintenance
+ORDER BY f.name;

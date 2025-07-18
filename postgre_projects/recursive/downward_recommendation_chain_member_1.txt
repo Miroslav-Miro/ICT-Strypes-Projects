@@ -1,0 +1,15 @@
+WITH RECURSIVE downward_chain AS (
+  SELECT memid, firstname, surname
+  FROM cd.members
+  WHERE recommendedby = 1
+
+  UNION ALL
+
+  SELECT m.memid, m.firstname, m.surname
+  FROM cd.members m
+  JOIN downward_chain dc ON m.recommendedby = dc.memid
+)
+
+SELECT memid, firstname, surname
+FROM downward_chain
+ORDER BY memid;

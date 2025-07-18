@@ -1,0 +1,11 @@
+SELECT
+  f.name,
+  DATE_TRUNC('month', b.starttime) AS month,
+  ROUND(
+    SUM(b.slots) * 100.0 / (25 * EXTRACT(DAY FROM (DATE_TRUNC('month', b.starttime) + INTERVAL '1 month - 1 day'))),
+    1
+  ) AS utilisation
+FROM cd.bookings b
+JOIN cd.facilities f ON b.facid = f.facid
+GROUP BY f.name, DATE_TRUNC('month', b.starttime)
+ORDER BY f.name, month;

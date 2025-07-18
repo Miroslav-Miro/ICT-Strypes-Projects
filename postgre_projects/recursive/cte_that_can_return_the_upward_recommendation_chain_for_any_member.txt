@@ -1,0 +1,21 @@
+WITH RECURSIVE recommenders AS (
+    SELECT 
+        memid AS member, 
+        recommendedby AS recommender
+    FROM cd.members
+    WHERE memid IN (12, 22)
+  UNION ALL
+    SELECT 
+        r.member, 
+        m.recommendedby
+    FROM recommenders r
+    JOIN cd.members m ON r.recommender = m.memid
+)
+SELECT 
+    r.member, 
+    r.recommender, 
+    m.firstname, 
+    m.surname
+FROM recommenders r
+JOIN cd.members m ON r.recommender = m.memid
+ORDER BY r.member, r.recommender DESC;

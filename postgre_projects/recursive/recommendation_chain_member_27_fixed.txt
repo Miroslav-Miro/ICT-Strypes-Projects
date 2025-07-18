@@ -1,0 +1,19 @@
+WITH RECURSIVE recommendation_chain AS (
+  SELECT memid, recommendedby
+  FROM cd.members
+  WHERE memid = 27
+
+  UNION ALL
+
+  SELECT m.memid, m.recommendedby
+  FROM cd.members m
+  JOIN recommendation_chain rc ON m.memid = rc.recommendedby
+)
+
+SELECT 
+  m.memid AS recommender,
+  m.firstname,
+  m.surname
+FROM recommendation_chain rc
+JOIN cd.members m ON rc.recommendedby = m.memid
+ORDER BY recommender DESC;

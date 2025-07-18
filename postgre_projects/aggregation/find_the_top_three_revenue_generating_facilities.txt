@@ -1,0 +1,16 @@
+SELECT name, rank
+FROM (
+  SELECT 
+    f.name,
+    RANK() OVER (ORDER BY SUM(
+      CASE 
+        WHEN b.memid = 0 THEN f.guestcost * b.slots
+        ELSE f.membercost * b.slots
+      END
+    ) DESC) AS rank
+  FROM cd.bookings b
+  JOIN cd.facilities f ON b.facid = f.facid
+  GROUP BY f.name
+) AS revenue_ranked
+WHERE rank <= 3
+ORDER BY rank, name;

@@ -1,0 +1,11 @@
+SELECT facid, SUM(slots) AS total
+FROM cd.bookings
+GROUP BY facid
+HAVING SUM(slots) = (
+  SELECT MAX(total_slots)
+  FROM (
+    SELECT facid, SUM(slots) AS total_slots
+    FROM cd.bookings
+    GROUP BY facid
+  ) AS slot_totals
+);

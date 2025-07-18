@@ -1,0 +1,4 @@
+SELECT b.starttime
+FROM cd.members AS m
+JOIN cd.bookings AS b ON b.memid = m.memid
+WHERE firstname || ' ' ||  surname = 'David Farrell';
